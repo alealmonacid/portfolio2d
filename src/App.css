@@ -31,7 +31,7 @@ body {
 
 /* Scroll Wrapper to create scrolling height */
 .scroll-container {
-  height: 500vh; /* 5 sections * 100vh */
+  height: 900vh; /* Slows manual scrolling speed down further for premium control */
   position: relative;
 }
 
@@ -78,7 +78,7 @@ body {
   top: auto; /* ponytail: overrides top: 0 from general .layer class */
   bottom: 0;
   left: 0;
-  height: 110px;
+  height: 70px;
 }
 
 /* Individual segment visuals for distinct floor styles per world (Super Mario 1985 themed) */
@@ -86,33 +86,37 @@ body {
   position: absolute;
   bottom: 0;
   width: 100vw;
-  height: 110px;
+  height: 70px;
   background-repeat: repeat-x;
+  background-size: auto 100%; /* tile keeps full height, repeats horizontally */
+  background-position: bottom left;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
 }
 
-/* segment-0 (1-1 Overworld): Classic Brown brick tiles */
+/* segment-0 (Inicio / Mario): Mario overworld brick floor */
 .segment-0 {
-  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="110" viewBox="0 0 32 110"><rect width="32" height="110" fill="%23c84c0c"/><rect x="0" y="0" width="32" height="16" fill="%23fcb488"/><rect x="2" y="2" width="28" height="12" fill="%23c84c0c"/><line x1="0" y1="16" x2="32" y2="16" stroke="%23000" stroke-width="2"/><line x1="16" y1="0" x2="16" y2="16" stroke="%23000" stroke-width="2"/><line x1="0" y1="0" x2="32" y2="0" stroke="%23000" stroke-width="2"/><rect x="0" y="16" width="32" height="94" fill="%23c84c0c"/><rect x="0" y="18" width="14" height="28" fill="%23000" opacity="0.3"/><rect x="18" y="18" width="14" height="28" fill="%23000" opacity="0.3"/><rect x="0" y="50" width="32" height="60" fill="%23000" opacity="0.5"/></svg>');
+  background-image: url('/ground_mario.png');
 }
 
-/* segment-1 (1-2 Underground): Blue-grey brick tiles */
+/* segment-1 (Quien Soy / Hoth): Star Wars ice/snow ground */
 .segment-1 {
-  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="110" viewBox="0 0 32 110"><rect width="32" height="110" fill="#0044ab"/><rect x="0" y="0" width="32" height="16" fill="#80bfff"/><rect x="2" y="2" width="28" height="12" fill="#0044ab"/><line x1="0" y1="16" x2="32" y2="16" stroke="%23000" stroke-width="2"/><line x1="16" y1="0" x2="16" y2="16" stroke="%23000" stroke-width="2"/><line x1="0" y1="0" x2="32" y2="0" stroke="%23000" stroke-width="2"/><rect x="0" y="16" width="32" height="94" fill="#0044ab"/><rect x="0" y="18" width="14" height="28" fill="%23000" opacity="0.3"/><rect x="18" y="18" width="14" height="28" fill="%23000" opacity="0.3"/><rect x="0" y="50" width="32" height="60" fill="%23000" opacity="0.5"/></svg>');
+  background-image: url('/ground_hoth.png');
 }
 
-/* segment-2 (1-3 Athletic): Wooden bridge blocks */
+/* segment-2 (Experiencia / DKC): Donkey Kong Country jungle ground */
 .segment-2 {
-  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="110" viewBox="0 0 32 110"><rect width="32" height="16" fill="%23fcb488"/><rect x="2" y="2" width="28" height="12" fill="%23c84c0c"/><line x1="0" y1="16" x2="32" y2="16" stroke="%23000" stroke-width="2"/><line x1="8" y1="0" x2="8" y2="16" stroke="%23000" stroke-width="1"/><line x1="24" y1="0" x2="24" y2="16" stroke="%23000" stroke-width="1"/><line x1="0" y1="0" x2="32" y2="0" stroke="%23000" stroke-width="2"/><rect x="12" y="16" width="8" height="94" fill="%23542404"/><line x1="12" y1="16" x2="12" y2="110" stroke="%23000" stroke-width="2"/><line x1="20" y1="16" x2="20" y2="110" stroke="%23000" stroke-width="2"/></svg>');
+  background-image: url('/ground_dkc.png');
 }
 
-/* segment-3 (1-4 Castle): Grey stone blocks */
+/* segment-3 (Proyectos / Metroid): Metroid alien stone floor */
 .segment-3 {
-  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="110" viewBox="0 0 32 110"><rect width="32" height="110" fill="#666666"/><rect x="0" y="0" width="32" height="16" fill="#cccccc"/><rect x="2" y="2" width="28" height="12" fill="#666666"/><line x1="0" y1="16" x2="32" y2="16" stroke="%23000" stroke-width="2"/><line x1="16" y1="0" x2="16" y2="16" stroke="%23000" stroke-width="2"/><line x1="0" y1="0" x2="32" y2="0" stroke="%23000" stroke-width="2"/><rect x="0" y="16" width="32" height="94" fill="#666666"/><rect x="0" y="18" width="14" height="28" fill="%23000" opacity="0.3"/><rect x="18" y="18" width="14" height="28" fill="%23000" opacity="0.3"/><rect x="0" y="50" width="32" height="60" fill="%23000" opacity="0.5"/></svg>');
+  background-image: url('/ground_metroid.png');
 }
 
-/* segment-4 (1-5 Underwater): Coral sand tiles */
+/* segment-4 (Contacto / Metal Slug): Metal Slug desert/warzone ground */
 .segment-4 {
-  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="110" viewBox="0 0 32 110"><rect width="32" height="110" fill="%23fcb488"/><rect x="0" y="0" width="32" height="16" fill="%23ffffff"/><rect x="2" y="2" width="28" height="12" fill="%23fcb488"/><line x1="0" y1="16" x2="32" y2="16" stroke="%23000" stroke-width="2"/><line x1="16" y1="0" x2="16" y2="16" stroke="%23000" stroke-width="2"/><line x1="0" y1="0" x2="32" y2="0" stroke="%23000" stroke-width="2"/><rect x="0" y="16" width="32" height="94" fill="%23fcb488"/><rect x="0" y="18" width="14" height="28" fill="%23000" opacity="0.2"/><rect x="18" y="18" width="14" height="28" fill="%23000" opacity="0.2"/><rect x="0" y="50" width="32" height="60" fill="%23000" opacity="0.4"/></svg>');
+  background-image: url('/ground_metalslug.png');
 }
 
 /* --- LOCAL PARALLAX SCENERY CLIPPED TO EACH WORLD SECTION --- */
@@ -301,34 +305,42 @@ body {
 .level-4-section { background-color: #0050c0; } /* Underwater Deep Blue */
 
 /* --- SECTION DIVIDER GATES (MARIO CASTLE STYLE) --- */
+.gates-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 500vw;
+  height: 100%;
+  z-index: 12; /* Placed above the character (z-index 10) but below HUD (z-index 100) */
+  pointer-events: none;
+  will-change: transform;
+}
+
 .section-divider-gate {
   position: absolute;
   top: 0;
-  width: 60px;
+  width: 90px; /* Thinner border between worlds */
   height: 100vh;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><rect width="32" height="32" fill="%23666666"/><rect x="1" y="1" width="30" height="30" fill="%23999999"/><rect x="3" y="3" width="26" height="26" fill="%23444444"/><rect x="5" y="5" width="22" height="22" fill="%23666666"/><line x1="0" y1="16" x2="32" y2="16" stroke="%23000000" stroke-width="4"/><line x1="16" y1="0" x2="16" y2="16" stroke="%23000000" stroke-width="4"/><line x1="8" y1="16" x2="8" y2="32" stroke="%23000000" stroke-width="4"/><line x1="24" y1="16" x2="24" y2="32" stroke="%23000000" stroke-width="4"/></svg>');
+  background-repeat: repeat;
+  border-left: 4px solid #000000;
+  border-right: 4px solid #000000;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center; /* Center header vertically */
   align-items: center;
-  z-index: 10;
+  z-index: 12;
   pointer-events: none;
-}
-
-.gate-pillar {
-  width: 24px;
-  height: 100%;
-  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><rect width="24" height="24" fill="%23666666"/><rect x="2" y="2" width="20" height="20" fill="%23999999"/><rect x="4" y="4" width="16" height="16" fill="%23444444"/><rect x="6" y="6" width="12" height="12" fill="%23666666"/></svg>');
-  background-repeat: repeat-y;
-  border-left: 2px solid #000;
-  border-right: 2px solid #000;
+  box-shadow: 0 0 20px rgba(0,0,0,0.8);
 }
 
 .gate-header {
-  width: 100%;
+  width: calc(100% + 12px);
   height: 48px;
   background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><rect width="24" height="24" fill="%23940000"/><rect x="2" y="2" width="20" height="20" fill="%23d82800"/><rect x="4" y="4" width="16" height="16" fill="%23fc9838"/></svg>');
   background-repeat: repeat;
-  border: 3px solid #000;
+  border-top: 4px solid #000;
+  border-bottom: 4px solid #000;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -338,6 +350,7 @@ body {
   font-weight: 800;
   text-shadow: 2px 2px 0px #000;
   box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+  transform: rotate(-3deg); /* Slight retro tilt! */
 }
 
 .divider-0-1 { left: 100vw; transform: translateX(-50%); }
@@ -983,81 +996,34 @@ body {
 /* Character Container & Styling */
 .character-container {
   position: absolute;
-  bottom: 102px; /* Sits slightly embedded in the floor */
+  bottom: 62px; /* Sits slightly embedded in the floor */
   left: 15vw;
-  width: 80px;
-  height: 120px;
+  width: 100px;
+  height: 100px;
   z-index: 10;
   pointer-events: none;
-  will-change: transform;
-  transition: transform 0.2s ease;
+  will-change: left;
 }
 
-.character-svg {
+.character-img {
   width: 100%;
   height: 100%;
-}
-
-/* SVGs details */
-.character-skin { fill: #ffd8b1; }
-.character-hair { fill: #4a2f13; }
-.character-eyes { fill: #000; }
-.character-jeans { fill: #0044ab; }
-.character-shoes { fill: #000; }
-
-/* Level Specific Clothing Styles (Mario themed clothing) */
-/* Level 0: Red Shirt, Blue Overalls */
-.char-hoodie { fill: #d82800; }
-.char-hat { display: none; }
-.char-helmet { display: none; }
-.char-neon-visor { display: none; }
-.char-backpack { fill: #c84c0c; }
-
-/* Level 1: Fire Mario (White Shirt, Red Overalls) */
-.level-1-char .char-hoodie { fill: #ffffff; }
-.level-1-char .character-jeans { fill: #d82800; }
-
-/* Level 2: Luigi (Green Shirt, Blue Overalls) */
-.level-2-char .char-hoodie { fill: #00a800; }
-.level-2-char .character-jeans { fill: #0044ab; }
-.level-2-char .character-hair { fill: #000; }
-
-/* Level 3: Retro Bowser/Hammer Bro visor */
-.level-3-char .char-hoodie { fill: #d82800; }
-.level-3-char .char-neon-visor { display: block; fill: none; stroke: #fc9838; stroke-width: 2px; }
-
-/* Level 4: Underwater Scuba Suit (Blue tone) */
-.level-4-char .char-hoodie { fill: #00a8f0; }
-.level-4-char .char-helmet { display: block; fill: rgba(0, 243, 255, 0.2); stroke: #ffffff; stroke-width: 2px; }
-
-/* Walking animation rotations on skeleton */
-.character-svg.walking .leg-l {
-  animation: walkLegLeft 0.6s infinite ease-in-out;
-  transform-origin: 35px 85px;
-}
-.character-svg.walking .leg-r {
-  animation: walkLegRight 0.6s infinite ease-in-out;
-  transform-origin: 45px 85px;
-}
-.character-svg.walking .arm-l {
-  animation: walkArmLeft 0.6s infinite ease-in-out;
-  transform-origin: 25px 45px;
-}
-.character-svg.walking .arm-r {
-  animation: walkArmRight 0.6s infinite ease-in-out;
-  transform-origin: 55px 45px;
-}
-.character-svg.walking .torso-group {
-  animation: walkBob 0.6s infinite ease-in-out;
+  object-fit: contain;
 }
 
 /* Background SVGs objects drawing */
-.backdrop-svg {
+.backdrop-svg, .backdrop-img {
   position: absolute;
   bottom: 0;
   left: 0;
   width: 100%;
   height: 100%;
+}
+
+.backdrop-img {
+  object-fit: cover;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
 }
 
 /* Game Over Modal / Final portal interaction */
@@ -1126,11 +1092,37 @@ body {
    RESPONSIVE DESIGN (TABLET & MOBILE DEEP VERIFICATION)
    ------------------------------------------------------------- */
 
+/* -------------------------------------------------------------
+   RESPONSIVE DESIGN (TABLET & MOBILE DEEP VERIFICATION)
+   ------------------------------------------------------------- */
+
 @media (max-width: 1024px) {
+  .section {
+    padding: 120px 0 230px; /* Leave space for HUD at top and floor/character at bottom */
+  }
+
+  .section-divider-gate {
+    width: 80px; /* Thinner gates on tablet */
+  }
+
   .game-card {
+    width: calc(100vw - 90px); /* Safely clear the gates */
     max-width: 700px;
+    margin: 0 auto;
     padding: 20px;
-    max-height: calc(100vh - 200px);
+    max-height: calc(100vh - 350px); /* Match paddings */
+  }
+
+  .intro-container {
+    width: calc(100vw - 90px); /* Safely clear the gates */
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .local-parallax {
+    height: 60vh;
+    top: auto;
+    bottom: 0;
   }
 
   .rpg-grid {
@@ -1144,16 +1136,45 @@ body {
   .contact-container {
     gap: 20px;
   }
+
+  /* HUD Tablet adjustments to keep header neat */
+  .mario-hud {
+    padding: 12px 15px 6px;
+    max-width: 100%;
+  }
+
+  .hud-header-text, .hud-value-text {
+    font-size: 11px;
+    letter-spacing: 1px;
+  }
+
+  .nav-btn {
+    font-size: 9px;
+    padding: 6px 12px;
+  }
 }
 
 @media (max-width: 768px) {
   .section {
-    padding: 95px 4vw 115px; /* Leave space for HUD */
+    padding: 120px 0 190px; /* Clear HUD and mobile scale character/floor */
+  }
+
+  .section-divider-gate {
+    width: 70px; /* Thinner gates on mobile */
   }
 
   .game-card {
-    max-height: calc(100vh - 190px);
-    padding: 16px;
+    width: calc(100vw - 90px); /* Safely clear the thinner mobile gates and leave more margin */
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 16px; /* Increase inner padding for a cleaner layout */
+    max-height: calc(100vh - 310px); /* Match section vertical padding (120px top + 190px bottom) */
+  }
+
+  .local-parallax {
+    height: 50vh;
+    top: auto;
+    bottom: 0;
   }
 
   .card-body {
@@ -1161,22 +1182,29 @@ body {
   }
 
   .section-title {
-    font-size: 12px;
-    margin-bottom: 18px;
+    font-size: 11px;
+    margin-bottom: 12px;
     gap: 8px;
   }
 
   .retro-title {
-    font-size: 20px;
+    font-size: 18px;
+    line-height: 1.4;
+    margin-bottom: 15px;
   }
 
   .intro-subtitle {
-    font-size: 10px;
-    margin-bottom: 25px;
+    font-size: 9px;
+    margin-bottom: 20px;
+    line-height: 1.4;
   }
 
   .intro-container {
-    padding: 20px;
+    width: calc(100vw - 90px); /* Safely clear the gates and leave more margin */
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 16px; /* Increase inner padding for a cleaner layout */
+    min-height: auto;
   }
 
   /* About Me Mobile Layout */
@@ -1187,42 +1215,137 @@ body {
 
   .bio-header {
     margin-bottom: 12px;
+    gap: 12px;
   }
 
   .profile-avatar-container {
-    width: 64px;
-    height: 64px;
+    width: 52px;
+    height: 52px;
+    border-width: 2px;
+  }
+
+  .bio-title-area h3 {
+    font-size: 11px;
+  }
+
+  .bio-title-area p {
+    font-size: 8px;
+  }
+
+  .rpg-bio {
+    font-size: 11px;
+    line-height: 1.4;
+  }
+
+  .rpg-bio p {
+    margin-bottom: 8px;
   }
 
   .skills-tags {
-    margin-top: 10px;
+    margin-top: 8px;
     gap: 4px;
   }
 
   .skill-tag {
-    font-size: 8px;
-    padding: 3px 6px;
+    font-size: 7px;
+    padding: 2px 4px;
+    border-width: 1.5px;
+  }
+
+  .rpg-stats-panel {
+    padding: 8px;
+    border-width: 2px;
+  }
+
+  .rpg-stat {
+    margin-bottom: 8px;
+  }
+
+  .stat-label-row {
+    font-size: 7px;
+    margin-bottom: 4px;
+  }
+
+  .stat-bar {
+    height: 8px;
+    border-width: 1.5px;
   }
 
   /* Timeline Mobile Layout */
   .timeline-item {
     grid-template-columns: 1fr;
-    gap: 5px;
-    padding-left: 15px;
+    gap: 4px;
+    padding-left: 12px;
+    padding-bottom: 8px;
+  }
+
+  .timeline-item::before {
+    left: -5px;
+    top: 4px;
+    width: 8px;
+    height: 8px;
+    border-width: 1.5px;
   }
 
   .timeline-date {
+    font-size: 7px;
+  }
+
+  .timeline-content h3 {
+    font-size: 11px;
+    margin-bottom: 2px;
+  }
+
+  .timeline-company {
     font-size: 8px;
+    margin-bottom: 6px;
+  }
+
+  .timeline-desc {
+    font-size: 11px;
+    line-height: 1.4;
   }
 
   /* Projects Slider Mobile */
+  .slider-controls {
+    margin-bottom: -5px;
+    gap: 10px;
+  }
+
+  .slider-arrow-btn {
+    width: 35px;
+    height: 35px;
+    border-width: 2px;
+    font-size: 10px;
+    box-shadow: 2px 2px 0px #000000;
+  }
+
   .project-card {
     width: 100%;
-    height: 220px;
+    height: 180px;
+    padding: 12px;
+    border-width: 2px;
   }
 
   .project-img-placeholder {
-    height: 64px;
+    height: 52px;
+    border-width: 1.5px;
+    margin-bottom: 8px;
+  }
+
+  .project-card h4 {
+    font-size: 8px;
+    margin-bottom: 6px;
+  }
+
+  .project-desc {
+    font-size: 11px;
+    line-height: 1.4;
+  }
+
+  .project-link {
+    font-size: 7px;
+    margin-top: 6px;
   }
 
   /* Contact Mobile Layout */
@@ -1233,32 +1356,77 @@ body {
 
   .contact-info {
     text-align: center;
-    gap: 10px;
+    gap: 8px;
+  }
+
+  .contact-text {
+    font-size: 11px;
+    line-height: 1.4;
   }
 
   .social-links {
     justify-content: center;
+    gap: 10px;
+    margin-top: 6px;
   }
 
   .social-btn {
-    width: 40px;
-    height: 40px;
+    width: 36px;
+    height: 36px;
+    border-width: 1.5px;
+    box-shadow: 2px 2px 0px #000000;
+  }
+
+  .social-icon {
+    width: 14px;
+    height: 14px;
+  }
+
+  .form-group {
+    gap: 4px;
+  }
+
+  .form-label {
+    font-size: 7px;
+  }
+
+  .form-input, .form-textarea {
+    padding: 6px;
+    font-size: 11px;
+    border-width: 2px;
+  }
+
+  .form-textarea {
+    height: 55px;
+  }
+
+  .submit-btn {
+    padding: 8px;
+    font-size: 8px;
+    border-width: 2px;
+    box-shadow: 2px 2px 0px #000000;
+    margin-top: 4px;
   }
 
   /* HUD Mobile layout */
   .mario-hud {
-    padding: 15px 10px;
+    padding: 8px 10px 4px 10px;
+    gap: 4px;
     max-width: 100%;
   }
 
+  .hud-col {
+    gap: 2px;
+  }
+
   .hud-header-text, .hud-value-text {
-    font-size: 10px;
-    letter-spacing: 1px;
+    font-size: 8px;
+    letter-spacing: 0.5px;
   }
 
   .mario-coin-icon {
-    width: 7px;
-    height: 10px;
+    width: 6px;
+    height: 9px;
     border-width: 1px;
   }
 
@@ -1266,24 +1434,25 @@ body {
   .character-container {
     width: 50px;
     height: 75px;
-    bottom: 96px;
+    bottom: 56px;
     left: 8vw;
   }
 
   .layer-ground, .ground-segment {
-    height: 100px;
+    height: 60px;
   }
 
   .hud-nav {
     flex-wrap: wrap;
     justify-content: center;
-    gap: 8px;
-    margin-top: 10px;
+    gap: 6px;
+    margin-top: 6px;
   }
 
   .nav-btn {
-    font-size: 8px;
-    padding: 6px 8px;
+    font-size: 7px;
+    padding: 4px 6px;
+    border-width: 2px;
     box-shadow: 2px 2px 0px #000000;
   }
 
@@ -1300,20 +1469,29 @@ body {
   /* Detail modal adjustments */
   .detail-modal-card {
     padding: 15px;
+    border-width: 3px;
+    width: 85%;
   }
 
   .detail-modal-title {
-    font-size: 10px;
+    font-size: 9px;
   }
 
   .modal-img-banner {
-    height: 90px;
-    margin-bottom: 12px;
+    height: 80px;
+    border-width: 2px;
+    margin-bottom: 10px;
   }
 
   .modal-body-desc {
-    font-size: 12px;
-    margin-bottom: 12px;
+    font-size: 11px;
+    line-height: 1.4;
+    margin-bottom: 10px;
+  }
+
+  .modal-tech-label {
+    font-size: 7px;
+    margin-bottom: 6px;
   }
 
   .modal-buttons-row {
@@ -1323,6 +1501,8 @@ body {
 
   .modal-action-btn {
     font-size: 8px;
-    padding: 10px 0;
+    padding: 8px 0;
+    border-width: 2px;
+    box-shadow: 2px 2px 0px #000000;
   }
 }
