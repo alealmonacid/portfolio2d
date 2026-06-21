@@ -66,6 +66,11 @@ function App() {
   const [direction, setDirection] = useState('right');
   const [showWinScreen, setShowWinScreen] = useState(false);
 
+  // Mario HUD states
+  const [score, setScore] = useState(0);
+  const [coins, setCoins] = useState(0);
+  const [timeLeft, setTimeLeft] = useState(400);
+
   // Projects Slider and Detail Modal states
   const [sliderIndex, setSliderIndex] = useState(0);
   const [visibleCardsCount, setVisibleCardsCount] = useState(3);
@@ -153,6 +158,14 @@ function App() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  // Live countdown timer for HUD
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTimeLeft((prev) => (prev > 0 ? prev - 1 : 0));
+    }, 1000);
+    return () => clearInterval(timer);
+  }, []);
+
   useEffect(() => {
     const handleScroll = () => {
       const scrollY = window.scrollY;
@@ -210,6 +223,12 @@ function App() {
         setActiveLevel(currentSectionIndex);
       }
 
+      // 6. Update score and coins based on progress
+      const nextScore = Math.floor(progress * 3000) * 100;
+      const nextCoins = Math.floor(progress * 99);
+      setScore(nextScore);
+      setCoins(nextCoins);
+
       prevScrollY.current = scrollY;
     };
 
@@ -261,15 +280,16 @@ function App() {
         
         {/* Parallax layers background container */}
         <div className="parallax-container">
-          {/* Layer 5: Ground line (1.0x speed) */}
-          {/* ponytail: distinct floor segments rendered side-by-side in layer-ground with corrected top: auto override */}
-          <div className="layer layer-ground" ref={groundLayerRef}>
-            <div className="ground-segment segment-0" style={{ left: '0vw' }}></div>
-            <div className="ground-segment segment-1" style={{ left: '100vw' }}></div>
-            <div className="ground-segment segment-2" style={{ left: '200vw' }}></div>
-            <div className="ground-segment segment-3" style={{ left: '300vw' }}></div>
-            <div className="ground-segment segment-4" style={{ left: '400vw' }}></div>
-          </div>
+          {/* Background parallax base placeholder */}
+        </div>
+
+        {/* Ground Layer (1.0x speed) - Placed directly under viewport for z-index ordering override */}
+        <div className="layer layer-ground" ref={groundLayerRef}>
+          <div className="ground-segment segment-0" style={{ left: '0vw' }}></div>
+          <div className="ground-segment segment-1" style={{ left: '100vw' }}></div>
+          <div className="ground-segment segment-2" style={{ left: '200vw' }}></div>
+          <div className="ground-segment segment-3" style={{ left: '300vw' }}></div>
+          <div className="ground-segment segment-4" style={{ left: '400vw' }}></div>
         </div>
 
         {/* Character element walking on floor */}
@@ -280,53 +300,92 @@ function App() {
           
           {/* SECTION DIVIDER GATES (TRANSITION PORTALS BETWEEN SECTIONS) */}
           <div className="section-divider-gate divider-0-1">
-            <div className="gate-header">MUNDO 02</div>
+            <div className="gate-header">MUNDO 1-2</div>
             <div className="gate-pillars-row" style={{ display: 'flex', width: '100%', justifyContent: 'space-between', height: 'calc(100% - 40px)' }}>
               <div className="gate-pillar"></div>
               <div className="gate-pillar"></div>
             </div>
           </div>
           <div className="section-divider-gate divider-1-2">
-            <div className="gate-header">MUNDO 03</div>
+            <div className="gate-header">MUNDO 1-3</div>
             <div className="gate-pillars-row" style={{ display: 'flex', width: '100%', justifyContent: 'space-between', height: 'calc(100% - 40px)' }}>
               <div className="gate-pillar"></div>
               <div className="gate-pillar"></div>
             </div>
           </div>
           <div className="section-divider-gate divider-2-3">
-            <div className="gate-header">MUNDO 04</div>
+            <div className="gate-header">MUNDO 1-4</div>
             <div className="gate-pillars-row" style={{ display: 'flex', width: '100%', justifyContent: 'space-between', height: 'calc(100% - 40px)' }}>
               <div className="gate-pillar"></div>
               <div className="gate-pillar"></div>
             </div>
           </div>
           <div className="section-divider-gate divider-3-4">
-            <div className="gate-header">PORTAL FIN</div>
+            <div className="gate-header">MUNDO 1-5</div>
             <div className="gate-pillars-row" style={{ display: 'flex', width: '100%', justifyContent: 'space-between', height: 'calc(100% - 40px)' }}>
               <div className="gate-pillar"></div>
               <div className="gate-pillar"></div>
             </div>
           </div>
 
-          {/* LEVEL 0: INICIO */}
+          {/* LEVEL 0: INICIO (WORLD 1-1: OVERWORLD) */}
           <section className="section level-0-section">
             {/* Local Parallax background layers clipped to Section 0 */}
             <div className="local-parallax">
               <div className="local-layer local-clouds" ref={el => cloudsRefs.current[0] = el}>
                 <svg className="backdrop-svg" viewBox="0 0 1000 600">
-                  <path d="M 120 150 C 150 120, 200 120, 230 150 C 260 130, 310 140, 330 170 C 350 200, 300 230, 230 220 C 180 230, 110 210, 120 150 Z" fill="#2d316a" />
-                  <path d="M 550 200 C 580 170, 630 170, 660 200 C 690 180, 740 190, 760 220 C 780 250, 730 280, 660 270 L 550 270 Z" fill="#2d316a" />
+                  {/* Retro SMB1 Clouds */}
+                  <g fill="#ffffff" stroke="#000000" strokeWidth="4">
+                    {/* Cloud 1 */}
+                    <rect x="150" y="80" width="120" height="35" rx="8" />
+                    <rect x="175" y="60" width="70" height="55" rx="8" />
+                    {/* Cloud 2 */}
+                    <rect x="550" y="100" width="160" height="35" rx="8" />
+                    <rect x="580" y="80" width="100" height="55" rx="8" />
+                  </g>
                 </svg>
               </div>
               <div className="local-layer local-back" ref={el => backRefs.current[0] = el}>
-                <svg className="backdrop-svg" viewBox="0 0 1000 600" preserveAspectRatio="none">
-                  <path d="M 0 600 L 0 440 L 140 310 L 280 450 L 460 270 L 680 490 L 820 290 L 1000 450 L 1000 600 Z" fill="#1b143c" />
+                <svg className="backdrop-svg" viewBox="0 0 1000 600">
+                  {/* Retro SMB1 Green Hills */}
+                  <g fill="#00a800" stroke="#000000" strokeWidth="4">
+                    {/* Hill 1 */}
+                    <path d="M 80 600 C 120 420, 240 420, 280 600 Z" />
+                    <path d="M 180 435 L 180 600" stroke="#007000" strokeWidth="3" />
+                    <path d="M 140 460 L 140 600" stroke="#007000" strokeWidth="3" />
+                    <path d="M 220 460 L 220 600" stroke="#007000" strokeWidth="3" />
+                    
+                    {/* Hill 2 */}
+                    <path d="M 680 600 C 720 450, 840 450, 880 600 Z" />
+                    <path d="M 780 465 L 780 600" stroke="#007000" strokeWidth="3" />
+                    <path d="M 740 490 L 740 600" stroke="#007000" strokeWidth="3" />
+                    <path d="M 820 490 L 820 600" stroke="#007000" strokeWidth="3" />
+                  </g>
                 </svg>
               </div>
               <div className="local-layer local-mid" ref={el => midRefs.current[0] = el}>
-                <svg className="backdrop-svg" viewBox="0 0 1000 600" preserveAspectRatio="none">
-                  <polygon points="80,600 65,490 73,490 60,420 70,420 55,350 85,350 72,420 80,420 68,490 105,600" fill="#2d225c" />
-                  <polygon points="850,600 830,510 838,510 825,440 833,440 820,370 850,370 837,440 845,440 832,510 870,600" fill="#2d225c" />
+                <svg className="backdrop-svg" viewBox="0 0 1000 600">
+                  {/* SMB1 Pipes and Bushes */}
+                  <g stroke="#000000" strokeWidth="4">
+                    {/* Green Warp Pipe */}
+                    <rect x="420" y="440" width="70" height="160" fill="#00a800" />
+                    <rect x="410" y="400" width="90" height="40" fill="#00a800" />
+                    <rect x="430" y="440" width="12" height="160" fill="#80d080" opacity="0.4" stroke="none" />
+                    <rect x="420" y="400" width="12" height="40" fill="#80d080" opacity="0.4" stroke="none" />
+                  </g>
+                  <g fill="#00a800" stroke="#000000" strokeWidth="4">
+                    {/* Bush 1 */}
+                    <circle cx="120" cy="540" r="25" />
+                    <circle cx="145" cy="530" r="30" />
+                    <circle cx="170" cy="540" r="25" />
+                    <rect x="110" y="530" width="60" height="30" fill="#00a800" stroke="none" />
+                    
+                    {/* Bush 2 */}
+                    <circle cx="820" cy="540" r="25" />
+                    <circle cx="845" cy="530" r="30" />
+                    <circle cx="870" cy="540" r="25" />
+                    <rect x="810" y="530" width="60" height="30" fill="#00a800" stroke="none" />
+                  </g>
                 </svg>
               </div>
             </div>
@@ -347,23 +406,49 @@ function App() {
 
           {/* LEVEL 1: QUIEN SOY */}
           <section className="section level-1-section">
-            {/* Local Parallax background layers clipped to Section 1 */}
+            {/* Local Parallax background layers clipped to Section 1 (WORLD 1-2: UNDERGROUND) */}
             <div className="local-parallax">
               <div className="local-layer local-clouds" ref={el => cloudsRefs.current[1] = el}>
                 <svg className="backdrop-svg" viewBox="0 0 1000 600">
-                  <path d="M 200 180 C 250 150, 320 160, 350 200 C 400 180, 450 210, 430 250 C 410 290, 300 290, 250 270 C 180 270, 170 220, 200 180 Z" fill="#144d32" />
+                  {/* Ceiling bricks in deep blue underground tone */}
+                  <g fill="#0044ab" stroke="#000000" strokeWidth="4">
+                    <rect x="0" y="0" width="1000" height="35" />
+                    <line x1="125" y1="0" x2="125" y2="35" />
+                    <line x1="250" y1="0" x2="250" y2="35" />
+                    <line x1="375" y1="0" x2="375" y2="35" />
+                    <line x1="500" y1="0" x2="500" y2="35" />
+                    <line x1="625" y1="0" x2="625" y2="35" />
+                    <line x1="750" y1="0" x2="750" y2="35" />
+                    <line x1="875" y1="0" x2="875" y2="35" />
+                  </g>
                 </svg>
               </div>
               <div className="local-layer local-back" ref={el => backRefs.current[1] = el}>
-                <svg className="backdrop-svg" viewBox="0 0 1000 600" preserveAspectRatio="none">
-                  <path d="M 0 600 L 0 490 Q 180 380 340 470 Q 540 360 740 480 Q 880 400 1000 490 L 1000 600 Z" fill="#0b2315" />
+                <svg className="backdrop-svg" viewBox="0 0 1000 600">
+                  {/* Distant dark blue structures and brick pillars */}
+                  <g fill="#002266" opacity="0.4">
+                    <rect x="180" y="35" width="90" height="565" />
+                    <rect x="720" y="35" width="90" height="565" />
+                  </g>
                 </svg>
               </div>
               <div className="local-layer local-mid" ref={el => midRefs.current[1] = el}>
-                <svg className="backdrop-svg" viewBox="0 0 1000 600" preserveAspectRatio="none">
-                  <polygon points="120,600 100,480 110,480 95,410 105,410 90,340 120,340 105,410 115,410 100,480 140,600" fill="#103e23" />
-                  <polygon points="320,600 295,460 308,460 288,370 300,370 280,290 320,290 300,370 312,370 292,460 345,600" fill="#0a2a17" />
-                  <polygon points="760,600 740,490 750,490 735,420 745,420 730,350 760,350 745,420 755,420 740,490 780,600" fill="#103e23" />
+                <svg className="backdrop-svg" viewBox="0 0 1000 600">
+                  {/* Floating bricks & underground pipes */}
+                  <g stroke="#000000" strokeWidth="4">
+                    {/* Hanging pipe from ceiling */}
+                    <rect x="300" y="35" width="60" height="120" fill="#00a800" />
+                    <rect x="290" y="155" width="80" height="30" fill="#00a800" />
+                    {/* Ground warp pipe */}
+                    <rect x="620" y="440" width="70" height="160" fill="#00a800" />
+                    <rect x="610" y="400" width="90" height="40" fill="#00a800" />
+                  </g>
+                  {/* Floating bricks */}
+                  <g fill="#0044ab" stroke="#000000" strokeWidth="4">
+                    <rect x="420" y="300" width="40" height="40" />
+                    <rect x="460" y="300" width="40" height="40" fill="#fcb488" /> {/* Q-block */}
+                    <rect x="500" y="300" width="40" height="40" />
+                  </g>
                 </svg>
               </div>
             </div>
@@ -454,24 +539,42 @@ function App() {
 
           {/* LEVEL 2: MI EXPERIENCIA */}
           <section className="section level-2-section">
-            {/* Local Parallax background layers clipped to Section 2 */}
+            {/* Local Parallax background layers clipped to Section 2 (WORLD 1-3: ATHLETIC) */}
             <div className="local-parallax">
               <div className="local-layer local-clouds" ref={el => cloudsRefs.current[2] = el}>
                 <svg className="backdrop-svg" viewBox="0 0 1000 600">
-                  <circle cx="500" cy="220" r="50" fill="#ffaa00" opacity="0.25" />
+                  {/* Clouds high in the sky */}
+                  <g fill="#ffffff" stroke="#000000" strokeWidth="4">
+                    <rect x="250" y="60" width="120" height="35" rx="8" />
+                    <rect x="275" y="40" width="70" height="55" rx="8" />
+                    <rect x="700" y="80" width="140" height="35" rx="8" />
+                    <rect x="725" y="60" width="90" height="55" rx="8" />
+                  </g>
                 </svg>
               </div>
               <div className="local-layer local-back" ref={el => backRefs.current[2] = el}>
-                <svg className="backdrop-svg" viewBox="0 0 1000 600" preserveAspectRatio="none">
-                  <path d="M 0 600 Q 250 400 520 500 Q 780 410 1000 510 L 1000 600 Z" fill="#4d240f" />
-                  <path d="M 0 600 L 120 540 C 260 480 430 560 580 510 L 820 560 L 1000 530 L 1000 600 Z" fill="#3c1b0a" opacity="0.65" />
+                <svg className="backdrop-svg" viewBox="0 0 1000 600">
+                  {/* Giant Mario Tree trunks/vines */}
+                  <g stroke="#000000" strokeWidth="4">
+                    <rect x="150" y="0" width="55" height="600" fill="#b06010" />
+                    <rect x="800" y="0" width="60" height="600" fill="#b06010" />
+                  </g>
                 </svg>
               </div>
               <div className="local-layer local-mid" ref={el => midRefs.current[2] = el}>
-                <svg className="backdrop-svg" viewBox="0 0 1000 600" preserveAspectRatio="none">
-                  <polygon points="100,600 280,340 460,600" fill="#582914" />
-                  <rect x="780" y="360" width="25" height="240" fill="#421e0e" />
-                  <polygon points="765,360 820,360 805,345 780,345" fill="#582914" />
+                <svg className="backdrop-svg" viewBox="0 0 1000 600">
+                  {/* Giant mushroom platforms */}
+                  <g stroke="#000000" strokeWidth="4">
+                    {/* Mushroom 1 */}
+                    <rect x="460" y="320" width="50" height="280" fill="#fcb488" />
+                    <path d="M 380 320 C 380 200, 590 200, 590 320 Z" fill="#d82800" />
+                    <circle cx="430" cy="270" r="12" fill="#ffffff" stroke="none" />
+                    <circle cx="500" cy="250" r="14" fill="#ffffff" stroke="none" />
+                    <circle cx="540" cy="290" r="12" fill="#ffffff" stroke="none" />
+                    
+                    {/* Railings */}
+                    <path d="M 0 450 L 1000 450" stroke="#fcb488" strokeWidth="6" strokeDasharray="25, 20" />
+                  </g>
                 </svg>
               </div>
             </div>
@@ -521,24 +624,40 @@ function App() {
 
           {/* LEVEL 3: PROYECTOS DESTACADOS */}
           <section className="section level-3-section">
-            {/* Local Parallax background layers clipped to Section 3 */}
+            {/* Local Parallax background layers clipped to Section 3 (WORLD 1-4: CASTLE) */}
             <div className="local-parallax">
               <div className="local-layer local-clouds" ref={el => cloudsRefs.current[3] = el}>
                 <svg className="backdrop-svg" viewBox="0 0 1000 600">
-                  <line x1="0" y1="120" x2="1000" y2="120" stroke="#ff007f" strokeWidth="2" opacity="0.2" />
-                  <line x1="0" y1="180" x2="1000" y2="180" stroke="#aa3bff" strokeWidth="1.5" opacity="0.2" />
+                  {/* Chains hanging in the castle */}
+                  <g stroke="#000000" strokeWidth="4" fill="none">
+                    <path d="M 120 0 L 120 220" strokeDasharray="14, 10" />
+                    <path d="M 880 0 L 880 220" strokeDasharray="14, 10" />
+                  </g>
                 </svg>
               </div>
               <div className="local-layer local-back" ref={el => backRefs.current[3] = el}>
-                <svg className="backdrop-svg" viewBox="0 0 1000 600" preserveAspectRatio="none">
-                  <path d="M 0 600 L 0 350 L 60 350 L 60 420 L 130 420 L 130 290 L 200 290 L 200 460 L 300 460 L 300 230 L 380 230 L 380 370 L 480 370 L 480 260 L 560 260 L 560 430 L 680 430 L 680 300 L 760 300 L 760 390 L 860 390 L 860 270 L 1000 270 L 1000 600 Z" fill="#140c2a" />
+                <svg className="backdrop-svg" viewBox="0 0 1000 600">
+                  {/* Castle wall masonry structures */}
+                  <g fill="#333333" stroke="#000000" strokeWidth="4">
+                    {/* Background columns */}
+                    <rect x="200" y="0" width="70" height="600" />
+                    <rect x="730" y="0" width="70" height="600" />
+                    {/* Arch windows */}
+                    <path d="M 450 180 C 450 130, 510 130, 510 180 L 510 260 L 450 260 Z" fill="#000" stroke="#000" />
+                  </g>
                 </svg>
               </div>
               <div className="local-layer local-mid" ref={el => midRefs.current[3] = el}>
-                <svg className="backdrop-svg" viewBox="0 0 1000 600" preserveAspectRatio="none">
-                  <rect x="0" y="300" width="1000" height="300" fill="#201344" />
-                  <rect x="150" y="360" width="10" height="15" fill="#00f3ff" />
-                  <rect x="210" y="330" width="12" height="20" fill="#ffaa00" />
+                <svg className="backdrop-svg" viewBox="0 0 1000 600">
+                  {/* Lava wave pool at the bottom */}
+                  <g fill="#d82800" stroke="#fc9838" strokeWidth="3">
+                    <path d="M 0 530 Q 30 500 60 530 T 120 530 T 180 530 T 240 530 T 300 530 T 360 530 T 420 530 T 480 530 T 540 530 T 600 530 T 660 530 T 720 530 T 780 530 T 840 530 T 900 530 T 960 530 T 1020 530 L 1020 600 L 0 600 Z" />
+                  </g>
+                  {/* Floating stone platforms */}
+                  <g fill="#666666" stroke="#000000" strokeWidth="4">
+                    <rect x="420" y="320" width="160" height="35" />
+                    <line x1="420" y1="337" x2="580" y2="337" stroke="#000000" strokeWidth="2" />
+                  </g>
                 </svg>
               </div>
             </div>
@@ -604,23 +723,42 @@ function App() {
 
           {/* LEVEL 4: CONTACTO */}
           <section className="section level-4-section">
-            {/* Local Parallax background layers clipped to Section 4 */}
+            {/* Local Parallax background layers clipped to Section 4 (WORLD 1-5: UNDERWATER) */}
             <div className="local-parallax">
               <div className="local-layer local-clouds" ref={el => cloudsRefs.current[4] = el}>
                 <svg className="backdrop-svg" viewBox="0 0 1000 600">
-                  <path d="M 100 100 C 300 80, 600 200, 700 150 C 800 100, 900 300, 1000 250 L 1000 400 L 0 400 Z" fill="#1b0c3a" opacity="0.4" />
+                  {/* Floating water bubbles */}
+                  <g fill="#ffffff" opacity="0.5">
+                    <circle cx="180" cy="380" r="6" />
+                    <circle cx="195" cy="330" r="9" />
+                    <circle cx="188" cy="270" r="5" />
+                    <circle cx="800" cy="350" r="8" />
+                    <circle cx="785" cy="290" r="11" />
+                  </g>
                 </svg>
               </div>
               <div className="local-layer local-back" ref={el => backRefs.current[4] = el}>
                 <svg className="backdrop-svg" viewBox="0 0 1000 600">
-                  <ellipse cx="730" cy="140" rx="30" ry="22" fill="#150a30" stroke="#ffaa00" strokeWidth="1.5" />
-                  <path d="M 670 148 Q 730 105 790 148 Q 730 175 670 148" stroke="#ffaa00" strokeWidth="3.5" fill="none" />
+                  {/* Deep coral mounds */}
+                  <g fill="#002d80" stroke="#000000" strokeWidth="4">
+                    <path d="M 120 600 C 180 480, 260 480, 320 600 Z" />
+                    <path d="M 680 600 C 740 460, 840 460, 900 600 Z" />
+                  </g>
                 </svg>
               </div>
               <div className="local-layer local-mid" ref={el => midRefs.current[4] = el}>
                 <svg className="backdrop-svg" viewBox="0 0 1000 600">
-                  <circle cx="220" cy="170" r="45" fill="#1b103e" stroke="#aa3bff" strokeWidth="2" />
-                  <path d="M 178 156 C 185 180 220 215 262 184 A 45 45 0 0 1 178 156 Z" fill="#aa3bff" opacity="0.3" />
+                  {/* Wavy seaweed and red corals */}
+                  <g fill="#00a800" stroke="#000000" strokeWidth="4">
+                    {/* Seaweed 1 */}
+                    <path d="M 220 600 Q 250 480 220 380 T 250 260 L 280 260 Q 250 380 280 480 T 250 600 Z" />
+                    {/* Seaweed 2 */}
+                    <path d="M 720 600 Q 690 490 720 390 T 690 280 L 720 280 Q 750 390 720 490 T 750 600 Z" />
+                  </g>
+                  {/* Red Corals */}
+                  <g fill="#d82800" stroke="#000000" strokeWidth="4">
+                    <path d="M 460 600 C 460 550, 440 520, 470 500 C 500 480, 520 520, 510 600 Z" />
+                  </g>
                 </svg>
               </div>
             </div>
@@ -675,45 +813,46 @@ function App() {
 
         {/* HUD Navigation overlay */}
         <div className="hud-overlay">
-          <div className="hud-header">
-            
-            <div className="hud-left">
-              {/* Hearts / HP Bar */}
-              <div className="hud-bar-container">
-                <span className="hud-label">HP</span>
-                <div className="hud-hearts">
-                  <svg className="heart" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-                  <svg className="heart" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-                  <svg className="heart" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-                </div>
-              </div>
-              
-              {/* XP / Level Progress Bar */}
-              <div className="hud-bar-container">
-                <span className="hud-label">XP</span>
-                <div className="hud-xp-bar">
-                  <div className="hud-xp-fill" style={{ width: `${xpPercent}%` }}></div>
-                </div>
-              </div>
+          <div className="mario-hud">
+            <div className="hud-col">
+              <span className="hud-header-text">ALEJANDRO</span>
+              <span className="hud-value-text">{String(score).padStart(6, '0')}</span>
             </div>
-
-            {/* Level Select navigation bar */}
-            <nav className="hud-nav">
-              <button className={`nav-btn ${activeLevel === 0 ? 'active' : ''}`} onClick={() => navigateToLevel(0)}>INICIO</button>
-              <button className={`nav-btn ${activeLevel === 1 ? 'active' : ''}`} onClick={() => navigateToLevel(1)}>SOBRE MI</button>
-              <button className={`nav-btn ${activeLevel === 2 ? 'active' : ''}`} onClick={() => navigateToLevel(2)}>EXPERIENCIA</button>
-              <button className={`nav-btn ${activeLevel === 3 ? 'active' : ''}`} onClick={() => navigateToLevel(3)}>PROYECTOS</button>
-              <button className={`nav-btn ${activeLevel === 4 ? 'active' : ''}`} onClick={() => navigateToLevel(4)}>CONTACTO</button>
-            </nav>
-
-            <div className="hud-right">
-              {/* Level Indicator banner */}
-              <div className="level-banner">
-                MUNDO <span className="level-number">0{activeLevel + 1}</span>
-              </div>
+            <div className="hud-col">
+              <span className="hud-header-text">COINS</span>
+              <span className="hud-value-text">
+                <span className="mario-coin-icon"></span>
+                x{String(coins).padStart(2, '0')}
+              </span>
             </div>
-
+            <div className="hud-col">
+              <span className="hud-header-text">WORLD</span>
+              <span className="hud-value-text">1-{activeLevel + 1}</span>
+            </div>
+            <div className="hud-col">
+              <span className="hud-header-text">TIME</span>
+              <span className="hud-value-text">{String(timeLeft).padStart(3, '0')}</span>
+            </div>
           </div>
+
+          {/* Level Select navigation bar */}
+          <nav className="hud-nav">
+            <button className={`nav-btn ${activeLevel === 0 ? 'active' : ''}`} onClick={() => navigateToLevel(0)}>
+              {activeLevel === 0 && <span className="nav-arrow">▶</span>} INICIO
+            </button>
+            <button className={`nav-btn ${activeLevel === 1 ? 'active' : ''}`} onClick={() => navigateToLevel(1)}>
+              {activeLevel === 1 && <span className="nav-arrow">▶</span>} SOBRE MI
+            </button>
+            <button className={`nav-btn ${activeLevel === 2 ? 'active' : ''}`} onClick={() => navigateToLevel(2)}>
+              {activeLevel === 2 && <span className="nav-arrow">▶</span>} EXPERIENCIA
+            </button>
+            <button className={`nav-btn ${activeLevel === 3 ? 'active' : ''}`} onClick={() => navigateToLevel(3)}>
+              {activeLevel === 3 && <span className="nav-arrow">▶</span>} PROYECTOS
+            </button>
+            <button className={`nav-btn ${activeLevel === 4 ? 'active' : ''}`} onClick={() => navigateToLevel(4)}>
+              {activeLevel === 4 && <span className="nav-arrow">▶</span>} CONTACTO
+            </button>
+          </nav>
         </div>
 
         {/* Project Detail Modal Overlay */}
